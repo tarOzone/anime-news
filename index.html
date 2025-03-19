@@ -3,91 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Season Viewer</title>
+    <title>Anime News Feed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap');
         body {
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-            transition: background 0.5s ease-in-out;
-            background: linear-gradient(to bottom, #ffdee9, #b5fffc);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            max-width: 450px;
-            position: relative;
-            animation: fadeIn 1s ease-in-out;
-        }
-        h1 {
-            font-family: 'Pacifico', cursive;
-            font-size: 2.2em;
-            color: #ff4b91;
-            text-shadow: 2px 2px 5px rgba(255, 75, 145, 0.3);
-        }
-        .season-image {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 15px;
-            margin-top: 15px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-        .chibi {
-            position: absolute;
-            width: 100px;
-            bottom: -30px;
-            right: -30px;
-            opacity: 0.8;
-            transform: rotate(-10deg);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            background: url('https://wallpaperaccess.com/full/2002936.jpg') no-repeat center center fixed;
+            background-size: cover;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1 id="season-text">Welcome to Anime Seasons!</h1>
-        <img id="season-image" class="season-image" src="" alt="Anime Season Image">
-        <img id="chibi" class="chibi" src="chibi.png" alt="Chibi Anime Character">
-        <script>
-            function getAnimeSeason() {
-                const date = new Date();
-                const month = date.getMonth() + 1;
-                let season = "Winter";
-                let imageUrl = "winter.jpg";
-                let bgColor = "#ffdee9";
-                
-                if (month >= 4 && month <= 6) {
-                    season = "Spring";
-                    imageUrl = "spring.jpg";
-                    bgColor = "#ffdde1";
-                } else if (month >= 7 && month <= 9) {
-                    season = "Summer";
-                    imageUrl = "summer.jpg";
-                    bgColor = "#fff1eb";
-                } else if (month >= 10 && month <= 12) {
-                    season = "Fall";
-                    imageUrl = "fall.jpg";
-                    bgColor = "#fdeff9";
-                }
-                
-                document.getElementById("season-text").textContent = `It's ${season}! Enjoy your anime!`;
-                document.getElementById("season-image").src = imageUrl;
-                document.body.style.background = `linear-gradient(to bottom, ${bgColor}, #b5fffc)`;
-            }
-            
-            getAnimeSeason();
-        </script>
+<body class="flex justify-center items-center h-screen">
+    <div class="bg-white bg-opacity-90 p-6 rounded-2xl shadow-lg max-w-lg w-full">
+        <!-- <h1 class="text-2xl font-bold text-pink-600 text-center">Latest Anime News</h1> -->
+        <ul id="news-list" class="mt-4 space-y-3"></ul>
     </div>
+
+    <script>
+        async function fetchAnimeNews() {
+            try {
+                const fakeNews = [
+                    { title: "New Anime Announced: Magical Cat Cafe!", url: "#", date: "2025-03-19", author: "Sakura Hoshino", image: "https://via.placeholder.com/150", readMore: "read more" },
+                    { title: "Top 10 Isekai Anime to Watch This Year", url: "#", date: "2025-03-18", author: "Takeshi Nakamura", image: "https://via.placeholder.com/150", readMore: "read more" },
+                    { title: "Attack on Titan Finale - What to Expect?", url: "#", date: "2025-03-17", author: "Hinata Tanaka", image: "https://via.placeholder.com/150", readMore: "read more" },
+                    { title: "Studio Ghibli's Latest Movie Teased", url: "#", date: "2025-03-16", author: "Haruto Miyazaki", image: "https://via.placeholder.com/150", readMore: "read more" },
+                    { title: "Best Romance Anime of the Season", url: "#", date: "2025-03-15", author: "Aoi Fujimoto", image: "https://via.placeholder.com/150", readMore: "read more" },
+                    { title: "One Piece Live-Action Season 2 Update", url: "#", date: "2025-03-14", author: "Renji Kuroda", image: "https://via.placeholder.com/150", readMore: "read more" },
+                    // { title: "New Shonen Anime Taking Over the Charts", url: "#", date: "2025-03-13", author: "Kenta Yoshida", image: "https://via.placeholder.com/150", readMore: "read more" },
+                    // { title: "Why Mecha Anime is Making a Comeback", url: "#", date: "2025-03-12", author: "Shinji Saito", image: "https://via.placeholder.com/150", readMore: "read more" },
+                    // { title: "Anime Figure Collecting - Beginner's Guide", url: "#", date: "2025-03-11", author: "Mika Aoyama", image: "https://via.placeholder.com/150", readMore: "read more" },
+                    // { title: "Upcoming Anime Movies in 2025", url: "#", date: "2025-03-10", author: "Haru Takahashi", image: "https://via.placeholder.com/150", readMore: "read more" }
+                ];
+                
+                const newsList = document.getElementById('news-list');
+                fakeNews.forEach(news => {
+                    let listItem = document.createElement('li');
+                    listItem.className = 'p-3 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center space-x-4';
+                    listItem.innerHTML = `
+                        <img src="${news.image}" alt="News Image" class="w-16 h-16 rounded-lg">
+                        <div>
+                            <a href="${news.url}" target="_blank" class="text-blue-600 font-semibold">${news.title}</a>
+                            <p class="text-sm text-gray-600">By ${news.author} | ${news.date}</p>
+                            <button class="mt-2 text-xs text-white bg-pink-500 px-3 py-1 rounded-lg hover:bg-pink-600">${news.readMore}</button>
+                        </div>
+                    `;
+                    newsList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        }
+        fetchAnimeNews();
+    </script>
 </body>
 </html>
