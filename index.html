@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Season Viewer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            transition: background 0.5s ease-in-out;
+            background: linear-gradient(to bottom, #ffdee9, #b5fffc);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
+            position: relative;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2em;
+            color: #ff4b91;
+            text-shadow: 2px 2px 5px rgba(255, 75, 145, 0.3);
+        }
+        .season-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            margin-top: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .chibi {
+            position: absolute;
+            width: 100px;
+            bottom: -30px;
+            right: -30px;
+            opacity: 0.8;
+            transform: rotate(-10deg);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="season-text">Welcome to Anime Seasons!</h1>
+        <img id="season-image" class="season-image" src="" alt="Anime Season Image">
+        <img id="chibi" class="chibi" src="chibi.png" alt="Chibi Anime Character">
+        <script>
+            function getAnimeSeason() {
+                const date = new Date();
+                const month = date.getMonth() + 1;
+                let season = "Winter";
+                let imageUrl = "winter.jpg";
+                let bgColor = "#ffdee9";
+                
+                if (month >= 4 && month <= 6) {
+                    season = "Spring";
+                    imageUrl = "spring.jpg";
+                    bgColor = "#ffdde1";
+                } else if (month >= 7 && month <= 9) {
+                    season = "Summer";
+                    imageUrl = "summer.jpg";
+                    bgColor = "#fff1eb";
+                } else if (month >= 10 && month <= 12) {
+                    season = "Fall";
+                    imageUrl = "fall.jpg";
+                    bgColor = "#fdeff9";
+                }
+                
+                document.getElementById("season-text").textContent = `It's ${season}! Enjoy your anime!`;
+                document.getElementById("season-image").src = imageUrl;
+                document.body.style.background = `linear-gradient(to bottom, ${bgColor}, #b5fffc)`;
+            }
+            
+            getAnimeSeason();
+        </script>
+    </div>
+</body>
+</html>
